@@ -1,7 +1,7 @@
 <?php
 function contaValida($username, $password)
 {
-    $link = mysqli_connect("localhost", "root", "", "sistema");
+    $link = mysqli_connect("localhost", "root", "", "ecommerce");
     $sql = "SELECT * FROM Account WHERE
 username = '" . $username . "' AND password =
 PASSWORD('$password')";
@@ -17,7 +17,7 @@ function registraConta($username)
 {
     session_start();
     session_unset();
-    $link = mysqli_connect("localhost", "root", "", "sistema");
+    $link = mysqli_connect("localhost", "root", "", "ecommerce");
     $sql = "SELECT * FROM Account WHERE username = '" . $username . "'";
     $result = mysqli_query($link, $sql);
     if ($result) {

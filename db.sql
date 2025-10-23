@@ -6,31 +6,48 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 CREATE TABLE `account` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-INSERT INTO `account` (`id`, `username`, `password`) VALUES
-(1, 'demo', '*3055544BD641D0814B910C4ACA5799F51B80F460'),
-(2, 'teste', '*54F70B7C45C0C6359C49B71D12ADE9C4422D8DC8');
+  `password` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `client` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `date` date NOT NULL,
-  `entered` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-INSERT INTO `client` (`id`, `name`, `date`, `entered`) VALUES
-(1, 'nome', '2077-10-10', '2025-08-21 20:11:05');
+  `entered` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+);
 
 CREATE TABLE `item` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `phone` varchar(255) NOT NULL,
-  `click` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `click` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `prod` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `preco` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+CREATE TABLE `categoria` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) NOT NULL,
+  `descricao` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+INSERT INTO `account` (`id`, `username`, `password`) VALUES
+(1, 'demo', 'demo123'),
+(2, 'teste', 'teste123');
+  
+INSERT INTO `client` (`id`, `name`, `date`, `entered`) VALUES
+(1, 'nome', '2077-10-10', '2025-08-21 20:11:05');
 
 INSERT INTO `item` (`id`, `name`, `phone`, `click`) VALUES
 (1, 'Item 01', '0000-0001', 0),
@@ -49,35 +66,5 @@ INSERT INTO `item` (`id`, `name`, `phone`, `click`) VALUES
 (14, 'Item 14', '0000-0014', 0),
 (15, 'Item 15', '0000-0015', 0);
 
-CREATE TABLE `prod` (
-  `id` int(11) NOT NULL,
-  `nome` varchar(250) NOT NULL,
-  `preco` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 INSERT INTO `prod` (`id`, `nome`, `preco`) VALUES
 (1, 'caderno', 12.30);
-
-ALTER TABLE `account`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `client`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `prod`
-  ADD PRIMARY KEY (`id`);
-
-ALTER TABLE `account`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
-ALTER TABLE `client`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
-ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
-
-ALTER TABLE `prod`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;

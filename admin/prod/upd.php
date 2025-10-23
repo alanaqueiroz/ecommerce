@@ -14,7 +14,7 @@
         exit;
     }
     
-    $link = mysqli_connect("localhost", "root", "", "sistema");
+    $link = mysqli_connect("localhost", "root", "", "ecommerce");
     $sql = "";
     $sql .= "SELECT * FROM prod WHERE id = '".$id."';";
     $result = mysqli_query($link, $sql);
@@ -39,7 +39,7 @@
             $error = "Preco obrigatorio";
         }
         if(!$error){
-            $link = mysqli_connect("localhost", "root", "", "sistema");
+            $link = mysqli_connect("localhost", "root", "", "ecommerce");
             $sql = "UPDATE prod SET nome = '".$nome."', preco = '".$preco."' WHERE id = '".$id."';";
             $result = mysqli_query($link, $sql);
             header("Location: /ecommerce/admin/prod");

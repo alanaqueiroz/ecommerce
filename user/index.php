@@ -13,7 +13,7 @@ include("../header.php");
 </form>
 
 <?php
-$link = mysqli_connect("localhost", "root", "", "sistema");
+$link = mysqli_connect("localhost", "root", "", "ecommerce");
 $sql = "";
 $sql .= " SELECT * FROM prod ";
 if (isset($_GET["kw"]) && $_GET["kw"]) {

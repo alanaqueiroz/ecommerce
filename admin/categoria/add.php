@@ -15,18 +15,18 @@
         if(!$error){
             $link = mysqli_connect("localhost", "root", "", "ecommerce");
             $sql = "";
-            $sql .= " INSERT INTO prod ";
+            $sql .= " INSERT INTO categoria ";
             $sql .= " (nome, preco) ";
             $sql .= " VALUES ";
             $sql .= "('".$nome."', '".$preco."')";
             $result = mysqli_query($link, $sql);
-            header("Location: /ecommerce/admin/prod");
+            header("Location: /ecommerce/admin/categoria");
             exit;
         }
     }
 ?>
 
-<h3>ADICIONAR PRODUTO</h3>
+<h3>ADICIONAR CATEGORIA</h3>
 
 <form method = "POST">
     <table>
