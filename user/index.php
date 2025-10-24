@@ -1,6 +1,7 @@
 <?php
 include("./config.inc.php");
 include("../header.php");
+include("./menu.php");
 ?>
 
 <h3>PRODUTOS</h3>
@@ -15,7 +16,7 @@ include("../header.php");
 <?php
 $link = mysqli_connect("localhost", "root", "", "ecommerce");
 $sql = "";
-$sql .= " SELECT * FROM prod ";
+$sql .= " SELECT * FROM produto ";
 if (isset($_GET["kw"]) && $_GET["kw"]) {
 	$sql .= " WHERE nome LIKE '%".$_GET["kw"]."%' ";
 }
@@ -46,8 +47,6 @@ if (mysqli_num_rows($result) > 0) {
 	echo "Nenhum resultado encontrado.";
 }
 ?>
-
-<br><br><a href="/ecommerce/user/carrinho.php" style="color: black;">CARRINHO</a>
 
 <?php
 include("../footer.php");

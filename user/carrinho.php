@@ -38,7 +38,7 @@ include("../header.php");
 <?php
 if (isset($_COOKIE["carrinho"])) {
 	$link = mysqli_connect("localhost", "root", "", "ecommerce");
-	$sql = "SELECT * FROM prod WHERE id IN (".$_COOKIE["carrinho"].") ORDER BY nome";
+	$sql = "SELECT * FROM produto WHERE id IN (".$_COOKIE["carrinho"].") ORDER BY nome";
 	$result = mysqli_query($link, $sql);
 	if ($result) {
 		while ($row = mysqli_fetch_assoc($result)) {

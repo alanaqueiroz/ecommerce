@@ -33,14 +33,14 @@ function logout()
     session_start();
     session_unset();
     session_destroy();
-    header("Location: /ecommerce/admin/login.php");
+    header("Location: /ecommerce/user/login.php");
     exit;
 }
 function validaSessao()
 {
     session_start();
     if (empty($_SESSION["CONTA_ID"])) {
-        header("Location: /ecommerce/admin/login.php");
+        header("Location: /ecommerce/user/login.php");
         exit;
     }
 }

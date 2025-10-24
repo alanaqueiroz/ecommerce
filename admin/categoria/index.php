@@ -8,10 +8,12 @@
 
 <h3>CATEGORIAS</h3>
 
-<table>
+<a href="/ecommerce/admin/categoria/add.php" style="color: black;">+ Adicionar Nova Categoria</a><br><br>
+
+<table border="1">
     <tr>
         <th>Nome</th>
-        <th>Descricao</th> 
+        <th>Descricao</th>
         <th>EDITAR</th> 
         <th>APAGAR</th> 
     </tr>
@@ -22,17 +24,15 @@
         while($row = mysqli_fetch_assoc($result)) {
             ?>
             <tr>
-                <td><input type="text" value="<?= htmlspecialchars($row["nome"]); ?>" /></td>
-                <td><input type="text" value="<?= htmlspecialchars($row["descricao"]); ?>" /></td>
-                <td><a href="/ecommerce/admin/categoria/upd.php?id=<?= $row["id"]; ?>" style="color: black;">Editar</a></td>
-                <td><a href="/ecommerce/admin/categoria/del.php?id=<?= $row["id"]; ?>" style="color: black;">Apagar</a></td>
+                <td><?=$row["nome"];?></td>
+                <td><?=$row["descricao"];?></td>
+                <td><a href="/ecommerce/admin/categoria/upd.php?id=<?= $row["id"]; ?>" style="color: black;">✏️</a></td>
+                <td><a href="/ecommerce/admin/categoria/del.php?id=<?= $row["id"]; ?>" style="color: black;">❌</a></td>
             </tr>
             <?php
         }      
     ?>   
 </table>
-
-<a href="/ecommerce/admin/categoria/add.php" style="color: black;">+ Adicionar Categoria</a>
 
 <?php
     include("../../footer.php");

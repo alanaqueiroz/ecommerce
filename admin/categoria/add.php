@@ -9,16 +9,16 @@
         if(!$nome){
             $error = "Nome obrigatorio";
         }
-        if(!$preco){
-            $error = "Preco obrigatorio";
+        if(!$descricao){
+            $error = "Descrição obrigatorio";
         }
         if(!$error){
             $link = mysqli_connect("localhost", "root", "", "ecommerce");
             $sql = "";
             $sql .= " INSERT INTO categoria ";
-            $sql .= " (nome, preco) ";
+            $sql .= " (nome, descricao) ";
             $sql .= " VALUES ";
-            $sql .= "('".$nome."', '".$preco."')";
+            $sql .= "('".$nome."', '".$descricao."')";
             $result = mysqli_query($link, $sql);
             header("Location: /ecommerce/admin/categoria");
             exit;
@@ -38,9 +38,9 @@
             </td>
         <tr>
         <tr>
-            <td style="text-align: right;">Nome:</td>
+            <td style="text-align: right;">Descrição:</td>
             <td> 
-                <input type="text" name="preco" value="<?=isset($preco) ?$preco:""?>">
+                <input type="text" name="descricao" value="<?=isset($descricao) ?$descricao:""?>">
             </td>
             </td>
         <tr>

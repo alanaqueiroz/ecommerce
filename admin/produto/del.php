@@ -5,18 +5,18 @@
 
     if(!$_GET["id"])
     {
-        header("Location: /ecommerce/admin/prod");
+        header("Location: /ecommerce/admin/produto");
         exit;
     }
     
             $link = mysqli_connect("localhost", "root", "", "ecommerce");
             $sql = "";
-            $sql = "SELECT * FROM prod WHERE id = '".$_GET["id"]."';";
+            $sql = "SELECT * FROM produto WHERE id = '".$_GET["id"]."';";
             $result = mysqli_query($link, $sql);
 
             if(mysqli_num_rows($result) == 0)
             {
-                header("Location: /ecommerce/admin/prod");
+                header("Location: /ecommerce/admin/produto");
                 exit;
             }
             $row = mysqli_fetch_assoc($result);
@@ -24,9 +24,9 @@
             if(isset($_GET["del"]) && ($_GET["del"] == "yes"))
             {
                 $link = mysqli_connect("localhost", "root", "", "ecommerce");
-                $sql = "DELETE FROM prod WHERE id = '".$_GET["id"]."';";
+                $sql = "DELETE FROM produto WHERE id = '".$_GET["id"]."';";
                 $result = mysqli_query($link, $sql);
-                 header("Location: /ecommerce/admin/prod");
+                 header("Location: /ecommerce/admin/produto");
                 exit;
             }
             include("../../header.php");
@@ -45,10 +45,10 @@
         
     <tr>
         <td style="text-align: center;">
-            <a href="/ecommerce/admin/prod/del.php?id=<?=$row["id"];?>&del=yes"><input type="button" value="SIM">
+            <a href="/ecommerce/admin/produto/del.php?id=<?=$row["id"];?>&del=yes"><input type="button" value="SIM">
         </td> 
         <td>   
-            <a href="/ecommerce/admin/prod/"><input type="button" value="NÃO">
+            <a href="/ecommerce/admin/produto/"><input type="button" value="NÃO">
         </td>
     </tr>
 </table>
