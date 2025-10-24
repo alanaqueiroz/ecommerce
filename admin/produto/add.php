@@ -38,9 +38,16 @@
             </td>
         <tr>
         <tr>
-            <td style="text-align: right;">Nome:</td>
+            <td style="text-align: right;">Preco:</td>
             <td> 
                 <input type="text" name="preco" value="<?=isset($preco) ?$preco:""?>">
+            </td>
+            </td>
+        <tr>
+        <tr>
+            <td style="text-align: right;">Categoria:</td>
+            <td> 
+                <input type="text" name="categoria" value="<?=isset($categoria) ?$categoria:""?>">
             </td>
             </td>
         <tr>
