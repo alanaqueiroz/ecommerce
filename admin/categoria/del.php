@@ -38,7 +38,7 @@
 <table>
     <tr>
         <td colspan="2" style="text-align: center;">
-            Tem certeza que deseja apagar o categoriauto? "<?=$row["nome"];?>"
+            Tem certeza que deseja apagar a categoria "<?=$row["nome"];?>"?
         </td>
     <tr>
     <tr>

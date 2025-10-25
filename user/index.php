@@ -1,5 +1,7 @@
 <?php
 include("./config.inc.php");
+include("session.php");
+validaSessao();
 include("../header.php");
 include("./menu.php");
 ?>
@@ -17,12 +19,12 @@ include("./menu.php");
 $link = mysqli_connect("localhost", "root", "", "ecommerce");
 mysqli_set_charset($link, "utf8");
 
-$sql = "SELECT * FROM produto";
+$sql = "SELECT p.*, c.nome AS categoria_nome FROM produto p LEFT JOIN categoria c ON p.categoria = c.id";
 if (isset($_GET["kw"]) && $_GET["kw"]) {
     $kw = mysqli_real_escape_string($link, $_GET["kw"]);
-    $sql .= " WHERE nome LIKE '%$kw%'";
+    $sql .= " WHERE p.nome LIKE '%$kw%' OR c.nome LIKE '%$kw%'";
 }
-$sql .= " ORDER BY nome;";
+$sql .= " ORDER BY p.nome;";
 
 $result = mysqli_query($link, $sql);
 if (mysqli_num_rows($result) > 0) {
@@ -30,14 +32,16 @@ if (mysqli_num_rows($result) > 0) {
     <table border="1">
         <tr>
             <th>Nome</th>
+            <th>Categoria</th>
             <th>Preço</th>
-            <th>COMPRAR</th>
+            <th>Comprar</th>
         </tr>
         <?php
         while ($row = mysqli_fetch_assoc($result)) {
             ?>
             <tr>
                 <td><?= htmlspecialchars($row["nome"]); ?></td>
+                <td><?= htmlspecialchars($row["categoria_nome"] ?? ""); ?></td>
                 <td><?= number_format($row["preco"], 2, ',', '.'); ?></td>
                 <td align="center">
                     <a href="/ecommerce/user/carrinho.php?a=<?= $row["id"]; ?>" style="color: black;">(+)</a>

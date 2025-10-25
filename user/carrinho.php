@@ -1,4 +1,10 @@
 <?php
+include("./config.inc.php");
+include("../header.php");
+include("./menu.php");
+?>
+
+<?php
 if (isset($_GET["a"])) {
 	if (isset($_COOKIE["carrinho"])) {
 		if (strpos($_COOKIE["carrinho"], "'".$_GET["a"]."'") === false) {
@@ -26,14 +32,7 @@ if (isset($_GET["a"])) {
 }
 ?>
 
-<?php
-include("./config.inc.php");
-include("../header.php");
-?>
-
 <h3>CARRINHO</h3>
-
-<a href="/ecommerce/user/" style="color: black;">Produtos</a><br><br>
 
 <?php
 if (isset($_COOKIE["carrinho"])) {

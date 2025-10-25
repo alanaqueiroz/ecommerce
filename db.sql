@@ -27,12 +27,12 @@ CREATE TABLE `produto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) NOT NULL,
   `preco` decimal(10,2) NOT NULL,
-  `categoria_id` int(11) NOT NULL,
+  `categoria` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_produto_categoria` (`categoria_id`),
+  KEY `idx_produto_categoria` (`categoria`),
   CONSTRAINT `fk_produto_categoria`
-    FOREIGN KEY (`categoria_id`) REFERENCES `categoria` (`id`)
-    ON DELETE RESTRICT ON UPDATE CASCADE
+    FOREIGN KEY (`categoria`) REFERENCES `categoria` (`id`)
+    ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 INSERT INTO `account` (`id`, `username`, `password`) VALUES
@@ -45,5 +45,5 @@ INSERT INTO `client` (`id`, `name`, `date`, `entered`) VALUES
 INSERT INTO `categoria` (`id`, `nome`, `descricao`) VALUES
 (1, 'Geral', 'Categoria padrão');
 
-INSERT INTO `produto` (`id`, `nome`, `preco`, `categoria_id`) VALUES
+INSERT INTO `produto` (`id`, `nome`, `preco`, `categoria`) VALUES
 (1, 'caderno', 12.30, 1);

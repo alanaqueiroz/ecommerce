@@ -21,12 +21,12 @@
     $link = mysqli_connect("localhost", "root", "", "ecommerce");
     mysqli_set_charset($link, "utf8");
 
-    $sql = "SELECT * FROM produto";
+$sql = "SELECT p.*, c.nome AS categoria_nome FROM produto p LEFT JOIN categoria c ON p.categoria = c.id";
     if (isset($_GET["kw"]) && $_GET["kw"] != "") {
         $kw = mysqli_real_escape_string($link, $_GET["kw"]);
-        $sql .= " WHERE nome LIKE '%$kw%'";
+    $sql .= " WHERE nome LIKE '%$kw%' OR c.nome LIKE '%$kw%'";
     }
-    $sql .= " ORDER BY nome;";
+    $sql .= " ORDER BY p.nome ASC;";
 
     $result = mysqli_query($link, $sql);
 ?>
@@ -34,9 +34,10 @@
 <table border="1">
     <tr>
         <th>Nome</th>
+        <th>Categoria</th>
         <th>Preco</th> 
-        <th>EDITAR</th> 
-        <th>APAGAR</th> 
+        <th>Editar</th> 
+        <th>Apagar</th> 
     </tr>
     <?php
         if (mysqli_num_rows($result) > 0) {
@@ -44,18 +45,19 @@
                 ?>
                 <tr>
                     <td><?= htmlspecialchars($row["nome"]); ?></td>
+                    <td><?= htmlspecialchars(!empty($row["categoria_nome"]) ? $row["categoria_nome"] : "Sem categoria", ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?= number_format($row["preco"], 2, ',', '.'); ?></td>
                     <td><a style="text-decoration: none;" href="/ecommerce/admin/produto/upd.php?id=<?= $row["id"]; ?>" style="color: black;">✏️</a></td>
                     <td><a style="text-decoration: none;" href="/ecommerce/admin/produto/del.php?id=<?= $row["id"]; ?>" style="color: black;">❌</a></td>
                 </tr>
                 <?php
             }
-        } else {
             ?>
-            <tr><td colspan="4">Nenhum resultado encontrado.</td></tr>
-            <?php
+    <?php
+        } else {
+            echo "Nenhum resultado encontrado.";
         }
-    ?>   
+    ?>
 </table>
 
 <?php

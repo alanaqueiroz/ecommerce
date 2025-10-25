@@ -1,3 +1,3 @@
 <?php
-$bodyBG = "#FFFFFF";
+$bodyBG = "#c4fff6ff";
 ?>

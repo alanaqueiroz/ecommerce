@@ -1,7 +1,6 @@
 <html>
     <head>
-        <title>Fatec Bauru</title>
+        <title>E-commerce</title>
     </head>
     <body style="background-color: <?=$bodyBG;?>;">
-        <img src="/ecommerce/img/logo.png" />
-        <h1>E-commerce</h1>
+        <img src="/ecommerce/img/logo.png"  alt="Descrição da imagem" width="200" />
