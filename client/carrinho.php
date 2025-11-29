@@ -14,7 +14,7 @@ if (isset($_GET["a"])) {
 	} else {
 		setcookie("carrinho", "'".$_GET["a"]."'", time()+60*60*24*30);
 	}
-	header("Location: /ecommerce/user/carrinho.php");
+	header("Location: /ecommerce/client/carrinho.php");
 	exit;
 } elseif (isset($_GET["r"])) {
 	if (isset($_COOKIE["carrinho"])) {
@@ -27,7 +27,7 @@ if (isset($_GET["a"])) {
 			setcookie("carrinho", $carrinho, time()+60*60*24*30);
 		}
 	}
-	header("Location: /ecommerce/user/carrinho.php");
+	header("Location: /ecommerce/client/carrinho.php");
 	exit;
 }
 ?>
@@ -41,7 +41,7 @@ if (isset($_COOKIE["carrinho"])) {
 	$result = mysqli_query($link, $sql);
 	if ($result) {
 		while ($row = mysqli_fetch_assoc($result)) {
-			echo "<a href=\"/ecommerce/user/carrinho.php?r=".$row["id"]."\" style=\"color: black;\">(-)</a> ".$row["nome"]."<br>";
+			echo "<a href=\"/ecommerce/client/carrinho.php?r=".$row["id"]."\" style=\"color: black;\">(-)</a> ".$row["nome"]."<br>";
 		}
 	}
 } else {

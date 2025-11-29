@@ -1,49 +1,51 @@
-CREATE DATABASE IF NOT EXISTS `ecommerce`;
-USE `ecommerce`;
+CREATE DATABASE IF NOT EXISTS ecommerce;
+USE ecommerce;
 
-CREATE TABLE `account` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE account (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    role ENUM('admin', 'client') NOT NULL DEFAULT 'client'
 );
 
-CREATE TABLE `client` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `date` date NOT NULL,
-  `entered` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE categoria (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE `categoria` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `descricao` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+CREATE TABLE produto (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    categoria INT DEFAULT NULL,
+    owner_id INT NOT NULL,
+    KEY idx_produto_categoria (categoria),
+    CONSTRAINT fk_produto_categoria
+        FOREIGN KEY (categoria) REFERENCES categoria(id)
+        ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT fk_produto_owner
+        FOREIGN KEY (owner_id) REFERENCES account(id)
+        ON DELETE CASCADE
 );
 
-CREATE TABLE `produto` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(255) NOT NULL,
-  `preco` decimal(10,2) NOT NULL,
-  `categoria` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_produto_categoria` (`categoria`),
-  CONSTRAINT `fk_produto_categoria`
-    FOREIGN KEY (`categoria`) REFERENCES `categoria` (`id`)
-    ON DELETE SET NULL ON UPDATE CASCADE
-);
+INSERT INTO account (username, password, name, role) VALUES
+('demo', 'demo123', 'Usuário Demo', 'admin'),
+('teste', 'teste123', 'Usuário Teste', 'client');
 
-INSERT INTO `account` (`id`, `username`, `password`) VALUES
-(1, 'demo', 'demo123'),
-(2, 'teste', 'teste123');
-  
-INSERT INTO `client` (`id`, `name`, `date`, `entered`) VALUES
-(1, 'nome', '2077-10-10', '2025-08-21 20:11:05');
+INSERT INTO categoria (nome, descricao) VALUES
+('Eletrônicos', 'Produtos eletrônicos em geral'),
+('Papelaria', 'Materiais de escritório'),
+('Roupas', 'Vestuário masculino e feminino'),
+('Livros', 'Livros diversos de ficção e não-ficção');
 
-INSERT INTO `categoria` (`id`, `nome`, `descricao`) VALUES
-(1, 'Geral', 'Categoria padrão');
-
-INSERT INTO `produto` (`id`, `nome`, `preco`, `categoria`) VALUES
-(1, 'caderno', 12.30, 1);
+INSERT INTO produto (nome, preco, categoria, owner_id) VALUES
+('Smartphone X200', 1999.90, 1, 1),
+('Fone de ouvido Bluetooth', 149.50, 1, 1),
+('Caneta azul', 2.50, 2, 1),
+('Blusa de algodão', 49.90, 3, 1),
+('Calça jeans', 89.90, 3, 1),
+('Livro: A Arte da Guerra', 29.90, 4, 1),
+('Caderno 100 folhas', 15.00, 2, 1);

@@ -2,6 +2,8 @@
     include("../config.inc.php");
     include("../session.php");
     validaSessao();
+    include("../../header.php");
+    include("../menu.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         extract($_POST);
@@ -33,12 +35,13 @@
                 <input type="text" name="nome" value="<?=isset($nome) ? $nome : ""?>">
             </td>
         </tr>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <input type="submit" name="submit" value="Cadastrar">
-            </td>
-        </tr>
     </table>
+    <br>
+    <tr>
+        <td colspan="2" style="text-align: center;">
+            <input type="submit" name="submit" value="Cadastrar">
+        </td>
+    </tr>
 </form>
 
 <?php

@@ -44,7 +44,7 @@ if (mysqli_num_rows($result) > 0) {
                 <td><?= htmlspecialchars($row["categoria_nome"] ?? ""); ?></td>
                 <td><?= number_format($row["preco"], 2, ',', '.'); ?></td>
                 <td align="center">
-                    <a href="/ecommerce/user/carrinho.php?a=<?= $row["id"]; ?>" style="color: black;">(+)</a>
+                    <a href="/ecommerce/client/carrinho.php?a=<?= $row["id"]; ?>" style="color: black;">(+)</a>
                 </td>
             </tr>
             <?php

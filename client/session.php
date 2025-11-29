@@ -17,13 +17,14 @@ function registraConta($username)
     session_start();
     session_unset();
     $link = mysqli_connect("localhost", "root", "", "ecommerce");
-    $sql = "SELECT id FROM account WHERE username = ? LIMIT 1";
+    $sql = "SELECT id, role FROM account WHERE username = ? LIMIT 1";
     $stmt = mysqli_prepare($link, $sql);
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
     if ($result && ($row = mysqli_fetch_assoc($result))) {
         $_SESSION["CONTA_ID"] = $row["id"];
+        $_SESSION["CONTA_ROLE"] = $row["role"];
     }
     mysqli_stmt_close($stmt);
     mysqli_close($link);
@@ -33,14 +34,14 @@ function logout()
     session_start();
     session_unset();
     session_destroy();
-    header("Location: /ecommerce/user/login.php");
+    header("Location: /ecommerce/client/login.php");
     exit;
 }
 function validaSessao()
 {
     session_start();
-    if (empty($_SESSION["CONTA_ID"])) {
-        header("Location: /ecommerce/user/login.php");
+    if (empty($_SESSION["CONTA_ID"]) || empty($_SESSION["CONTA_ROLE"]) || $_SESSION["CONTA_ROLE"] !== 'client') {
+        header("Location: /ecommerce/client/login.php");
         exit;
     }
 }

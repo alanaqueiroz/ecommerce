@@ -2,6 +2,8 @@
     include("../config.inc.php");
     include("../session.php");
     validaSessao();
+    include("../../header.php");
+    include("../menu.php");
 
     $id = null;
     if (isset($_GET['id']) && $_GET['id'] !== '') {
@@ -26,6 +28,13 @@
         exit;
     }
     $row = mysqli_fetch_assoc($result);
+
+    $currentUserId = isset($_SESSION['CONTA_ID']) ? (int)$_SESSION['CONTA_ID'] : 0;
+    if ((int)$row['owner_id'] !== $currentUserId) {
+        header("Location: /ecommerce/admin/produto");
+        exit;
+    }
+
     $nome = $row['nome'];
     $preco = $row['preco'];
     $categoria = $row['categoria'];
@@ -44,19 +53,15 @@
         $categoria_post = isset($_POST['categoria']) && $_POST['categoria'] !== '' ? intval($_POST['categoria']) : null;
 
         $error = "";
-        if ($nome_post === "") {
-            $error = "Nome obrigatorio";
-        }
-        if ($preco_post === "") {
-            $error = "Preco obrigatorio";
-        }
+        if ($nome_post === "") { $error = "Nome obrigatorio"; }
+        if ($preco_post === "") { $error = "Preco obrigatorio"; }
 
         if (!$error) {
             $nome_esc = mysqli_real_escape_string($link, $nome_post);
             $preco_esc = mysqli_real_escape_string($link, $preco_post);
             $categoria_sql = is_null($categoria_post) ? "NULL" : "'".mysqli_real_escape_string($link, $categoria_post)."'";
 
-            $sql_up = "UPDATE produto SET nome = '".$nome_esc."', preco = '".$preco_esc."', categoria = ".$categoria_sql." WHERE id = '".mysqli_real_escape_string($link, $id)."';";
+            $sql_up = "UPDATE produto SET nome = '".$nome_esc."', preco = '".$preco_esc."', categoria = ".$categoria_sql." WHERE id = '".mysqli_real_escape_string($link, $id)."' AND owner_id = '".$currentUserId."';";
             mysqli_query($link, $sql_up);
             header("Location: /ecommerce/admin/produto");
             exit;
@@ -68,7 +73,7 @@
     }
 ?>
 
-<h3>Editar Produto</h3>
+<h3>EDITAR PRODUTO</h3>
 
 <?php if (!empty($error)): ?>
     <div style="color: red;"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></div>
@@ -78,20 +83,17 @@
     <input type="hidden" name="id" value="<?= htmlspecialchars($id, ENT_QUOTES, 'UTF-8'); ?>">
     <table>
         <tr>
-            <td style="text-align: right;">Nome:</td>
-            <td>
+            <td>Nome:
                 <input type="text" name="nome" value="<?= htmlspecialchars($nome ?? '', ENT_QUOTES, 'UTF-8'); ?>">
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;">Preço:</td>
-            <td>
+            <td>Preço:
                 <input type="text" name="preco" value="<?= htmlspecialchars($preco ?? '', ENT_QUOTES, 'UTF-8'); ?>">
             </td>
         </tr>
         <tr>
-            <td style="text-align: right;">Categoria:</td>
-            <td>
+            <td>Categoria:
                 <select name="categoria">
                     <?php foreach ($cats as $c): ?>
                         <option value="<?= htmlspecialchars($c['id'], ENT_QUOTES, 'UTF-8'); ?>" <?= ($categoria !== null && intval($categoria) === intval($c['id'])) ? 'selected' : ''; ?>>
@@ -101,12 +103,13 @@
                 </select>
             </td>
         </tr>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <input type="submit" name="submit" value="Editar">
-            </td>
-        </tr>
     </table>
+    <br>
+    <tr>
+        <td colspan="2" style="text-align: center;">
+            <input type="submit" name="submit" value="Editar">
+        </td>
+    </tr>
 </form>
 
 <?php

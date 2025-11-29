@@ -2,8 +2,15 @@
     include("../config.inc.php");
     include("../session.php");
     validaSessao();
+    include("../../header.php");
+    include("../menu.php");
 
-    // conecta e carrega categorias para o dropdown
+    if (!isset($_SESSION['CONTA_ROLE']) || $_SESSION['CONTA_ROLE'] !== 'admin') {
+        header("Location: /ecommerce/admin/produto");
+        exit;
+    }
+    $currentUserId = isset($_SESSION['CONTA_ID']) ? (int)$_SESSION['CONTA_ID'] : 0;
+
     $link = mysqli_connect("localhost", "root", "", "ecommerce");
     mysqli_set_charset($link, "utf8");
     $categorias = [];
@@ -15,28 +22,23 @@
     }
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        extract($_POST);
+        $nome = isset($_POST['nome']) ? trim($_POST['nome']) : '';
+        $preco = isset($_POST['preco']) ? trim($_POST['preco']) : '';
+        $categoria = isset($_POST['categoria']) ? trim($_POST['categoria']) : '';
+
         $error = "";
-        if (!$nome) {
-            $error = "Nome obrigatorio";
-        }
-        if (!$preco) {
-            $error = "Preco obrigatorio";
-        }
-        if (!$categoria) {
-            $error = "Categoria obrigatoria";
-        }
+        if ($nome === "") { $error = "Nome obrigatorio"; }
+        if ($preco === "") { $error = "Preco obrigatorio"; }
+        if ($categoria === "") { $error = "Categoria obrigatoria"; }
+
         if (!$error) {
             $nomeEsc = mysqli_real_escape_string($link, $nome);
             $precoEsc = mysqli_real_escape_string($link, $preco);
             $categoriaEsc = (int)$categoria;
+            $ownerIdEsc = $currentUserId;
 
-            $sql = "";
-            $sql .= " INSERT INTO produto ";
-            $sql .= " (nome, preco, categoria) ";
-            $sql .= " VALUES ";
-            $sql .= "('".$nomeEsc."', '".$precoEsc."', '".$categoriaEsc."')";
-            $result = mysqli_query($link, $sql);
+            $sql = "INSERT INTO produto (nome, preco, categoria, owner_id) VALUES ('".$nomeEsc."', '".$precoEsc."', '".$categoriaEsc."', '".$ownerIdEsc."')";
+            mysqli_query($link, $sql);
             header("Location: /ecommerce/admin/produto");
             exit;
         }
@@ -48,38 +50,34 @@
 <form method = "POST">
     <table>
         <tr>
-            <td style="text-align: right;">Nome:</td>
-            <td> 
+            <td>Nome:
                 <input type="text" name="nome" value="<?=isset($nome) ?htmlspecialchars($nome):""?>">
             </td>
-            </td>
         <tr>
         <tr>
-            <td style="text-align: right;">Preco:</td>
-            <td> 
+            <td>Preco:
                 <input type="text" name="preco" value="<?=isset($preco) ?htmlspecialchars($preco):""?>">
             </td>
-            </td>
         <tr>
         <tr>
-            <td style="text-align: right;">Categoria:</td>
-            <td>
-                <select name="categoria">
-                    <option value="">-- selecione --</option>
-                    <?php foreach ($categorias as $cat): ?>
-                        <option value="<?= $cat['id'] ?>" <?= (isset($categoria) && $categoria == $cat['id']) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($cat['nome']) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+            <td>Categoria:
+                    <select name="categoria">
+                        <option value="">-- selecione --</option>
+                        <?php foreach ($categorias as $cat): ?>
+                            <option value="<?= $cat['id'] ?>" <?= (isset($categoria) && $categoria == $cat['id']) ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($cat['nome']) ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </td>
             </td>
-            </td>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <input type="submit" name="submit" value="Cadastrar">
-            </td>
-        </tr>
     </table>
+    <br>
+    <tr>
+        <td colspan="2" style="text-align: center;">
+            <input type="submit" name="submit" value="Cadastrar">
+        </td>
+    </tr>
 </form>
 
 <?php

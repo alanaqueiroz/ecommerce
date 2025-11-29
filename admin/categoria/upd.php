@@ -1,7 +1,9 @@
 <?php
     include("../config.inc.php");
     include("../session.php");
-    validaSessao();
+    validaSessao();    
+    include("../../header.php");
+    include("../menu.php");
 
     $id = "";
     if(($_GET["id"]).$id = $_GET["id"]);
@@ -42,22 +44,23 @@
     }
 ?>
 
-<h3>Editar Categoria</h3>
+<h3>EDITAR CATEGORIA</h3>
 
 <form method = "POST">
     <table>
         <tr>
-            <td style="text-align: right;">Nome:</td>
+            <td>Nome:</td>
             <td> 
                 <input type="text" name="nome" value="<?=isset($nome) ?$nome:""?>">
             </td>
         </tr>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <input type="submit" name="submit" value="Confirmar">
-            </td>
-        </tr>
     </table>
+    <br>
+    <tr>
+        <td colspan="2">
+            <input type="submit" name="submit" value="Confirmar">
+        </td>
+    </tr>
 </form>
 
 <?php

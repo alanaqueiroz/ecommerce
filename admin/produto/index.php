@@ -21,10 +21,16 @@
     $link = mysqli_connect("localhost", "root", "", "ecommerce");
     mysqli_set_charset($link, "utf8");
 
-$sql = "SELECT p.*, c.nome AS categoria_nome FROM produto p LEFT JOIN categoria c ON p.categoria = c.id";
+    $currentUserId = isset($_SESSION['CONTA_ID']) ? (int)$_SESSION['CONTA_ID'] : 0;
+
+    $sql = "SELECT p.*, c.nome AS categoria_nome
+            FROM produto p
+            LEFT JOIN categoria c ON p.categoria = c.id
+            WHERE p.owner_id = ".$currentUserId;
+
     if (isset($_GET["kw"]) && $_GET["kw"] != "") {
         $kw = mysqli_real_escape_string($link, $_GET["kw"]);
-    $sql .= " WHERE nome LIKE '%$kw%' OR c.nome LIKE '%$kw%'";
+        $sql .= " AND (p.nome LIKE '%$kw%' OR c.nome LIKE '%$kw%')";
     }
     $sql .= " ORDER BY p.nome ASC;";
 
