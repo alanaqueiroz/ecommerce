@@ -53,8 +53,8 @@
                     <td><?= htmlspecialchars($row["nome"]); ?></td>
                     <td><?= htmlspecialchars(!empty($row["categoria_nome"]) ? $row["categoria_nome"] : "Sem categoria", ENT_QUOTES, 'UTF-8'); ?></td>
                     <td><?= number_format($row["preco"], 2, ',', '.'); ?></td>
-                    <td><a style="text-decoration: none;" href="/ecommerce/admin/produto/upd.php?id=<?= $row["id"]; ?>" style="color: black;">✏️</a></td>
-                    <td><a style="text-decoration: none;" href="/ecommerce/admin/produto/del.php?id=<?= $row["id"]; ?>" style="color: black;">❌</a></td>
+                    <td align="center"><a style="text-decoration: none;" href="/ecommerce/admin/produto/upd.php?id=<?= $row["id"]; ?>" style="color: black;">✏️</a></td>
+                    <td align="center"><a style="text-decoration: none;" href="/ecommerce/admin/produto/del.php?id=<?= $row["id"]; ?>" style="color: black;">❌</a></td>
                 </tr>
                 <?php
             }

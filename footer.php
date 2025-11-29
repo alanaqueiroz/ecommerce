@@ -1,6 +1,6 @@
-<br><br><br>
+<br><br>
         <div>
-            Direitos autorais reservados
+           © Copyright - Todos os direitos reservados
         </div>
     </body>
 </html>

@@ -62,7 +62,7 @@
         <tr>
             <td>Categoria:
                     <select name="categoria">
-                        <option value="">-- selecione --</option>
+                        <option value="">-- Selecione --</option>
                         <?php foreach ($categorias as $cat): ?>
                             <option value="<?= $cat['id'] ?>" <?= (isset($categoria) && $categoria == $cat['id']) ? 'selected' : '' ?>>
                                 <?= htmlspecialchars($cat['nome']) ?>

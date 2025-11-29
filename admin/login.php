@@ -5,7 +5,7 @@ include("session.php");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (contaValida($_POST["username"], $_POST["password"])) {
         registraConta($_POST["username"]);
-        header("Location: /ecommerce/admin/index.php");
+        header("Location: /ecommerce/admin/produto/index.php");
         exit;
     }
     $username = $_POST["username"];
